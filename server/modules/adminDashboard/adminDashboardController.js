@@ -4,10 +4,14 @@ const userSch = require('./../user/userSchema');
 const bugSch = require('./../bug/bugSchema');
 const roleSch = require('./../role/roleSchema');
 const contentSch = require('./../content/contentSchema');
+const assignmentSch = require('./../assignment/assignmentSchema');
+
 const notificationSch = require('./../notification/notificationSchema');
 const notificationConfig = require('../notification/notificationConfig');
 
 const contentConfig = require('../content/contentConfig');
+const assignmentConfig = require('../assignment/assignmentConfig');
+
 const adminDashboardController = {};
 
 adminDashboardController.getNoOfCustomerByRegistration = async (req, res, next) => {
@@ -99,6 +103,22 @@ adminDashboardController.getSectionsByUser = async (req, res, next) => {
     populate = [{ path: 'image' }];
     let pulledData = await otherHelper.getQuerySendResponse(contentSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
     return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, contentConfig.gets, page, size, pulledData.totalData);
+  } catch (err) {
+    next(err);
+  }
+};
+
+adminDashboardController.getAssignmentsByUser = async (req, res, next) => {
+  const _id = req.user.id;
+  console.log(_id);
+  try {
+    let { page, size, populate, selectQuery, searchQuery, sortQuery } = otherHelper.parseFilters(req, 10, false);
+    if (req.user.id) {
+      searchQuery = { users: _id, ...searchQuery };
+    }
+    populate = [{ path: 'image' }];
+    let pulledData = await otherHelper.getQuerySendResponse(assignmentSch, page, size, sortQuery, searchQuery, selectQuery, next, populate);
+    return otherHelper.paginationSendResponse(res, httpStatus.OK, true, pulledData.data, assignmentConfig.gets, page, size, pulledData.totalData);
   } catch (err) {
     next(err);
   }

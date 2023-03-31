@@ -10,6 +10,14 @@ router.use('/role', roleRoutes);
 const contentRoutes = require('./api/content');
 router.use('/contents', contentRoutes);
 
+// All route of Contact
+const contactRoutes = require('./api/contact');
+router.use('/contact', contactRoutes);
+
+// All route of Assignment
+const assignmentRoutes = require('./api/assignment');
+router.use('/assignments', assignmentRoutes);
+
 // All route of Media
 const mediaRoutes = require('./api/media');
 router.use('/media', mediaRoutes);

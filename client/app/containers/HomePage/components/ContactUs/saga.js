@@ -1,9 +1,9 @@
 import { takeLatest, put, select, call } from 'redux-saga/effects';
-import Api from '../../utils/Api';
-import { makeSelectToken } from '../App/selectors';
+import Api from '../../../../utils/Api';
+import { makeSelectToken } from '../../../App/selectors';
 import * as types from './constants';
 import * as actions from './actions';
-import { enqueueSnackbar } from '../App/actions';
+import { enqueueSnackbar } from '../../../App/actions';
 
 function* saveContact(action) {
   const token = yield select(makeSelectToken());
@@ -29,7 +29,7 @@ function* loadContactDetail() {
 
 function* saveSuccessfunc(action) {
   const snackbarData = {
-    message: action.payload.msg || 'Contact Save success!!',
+    message: action.payload.msg || 'Message sent success!!',
     options: {
       variant: 'success',
     },

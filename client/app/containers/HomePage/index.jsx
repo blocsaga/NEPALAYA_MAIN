@@ -2,9 +2,12 @@ import { Helmet } from 'react-helmet';
 import StaticContentDiv from '../../components/StaticContentDiv';
 import Section from './components/Section';
 import Courses from './components/Courses';
+
 import Team from './components/Team';
 import Alumni from './components/Alumni';
-import Contact from './components/Contact';
+// import Contact from './components/Contact';
+import Contact from './components/ContactUs/Loadable';
+
 import { Col, Container, Row } from 'reactstrap';
 
 function HomePage() {
@@ -28,7 +31,7 @@ function HomePage() {
           {/* <Alumni /> */}
 
           {/* Importing Contact Us */}
-          {/* <Contact /> */}
+          <Contact />
         </div>
       </div>
     </>

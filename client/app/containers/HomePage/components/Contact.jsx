@@ -41,7 +41,7 @@ export default class Contact extends Component {
                     <Row>
                       <Col lg={6}>
                         <FormGroup className="mt-3">
-                          <Label className="contact-lable">First Name</Label>
+                          <Label className="contact-lable">Full Name</Label>
                           <Input
                             name="name"
                             id="name"
@@ -52,9 +52,9 @@ export default class Contact extends Component {
                       </Col>
                       <Col lg={6}>
                         <FormGroup className="mt-3">
-                          <Label className="contact-lable">Last Name</Label>
+                          <Label className="contact-lable">Subject</Label>
                           <Input
-                            name="name"
+                            name="subject"
                             id="lastname"
                             className="form-control"
                             type="text"

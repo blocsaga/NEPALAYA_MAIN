@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { HistoryRouter as Router } from 'redux-first-history/rr6';
 
-// admin theme
+// admin theme for admin and client dashboard
 // import './app.css';
 
 // client theme

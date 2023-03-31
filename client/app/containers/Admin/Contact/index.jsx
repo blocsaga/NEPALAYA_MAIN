@@ -1,54 +1,52 @@
+/**
+ *
+ * Contact
+ *
+ */
+// core components
+import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { FaPen, FaPlus, FaSearch, FaTrash } from 'react-icons/fa';
+import { FaEye, FaSearch, FaTrash } from 'react-icons/fa';
 import { connect } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import Button from '../../../components/Basic/Button';
 import TextField from '../../../components/Basic/TextField';
 import DeleteDialog from '../../../components/DeleteDialog';
-import Loading from '../../../components/Loading';
 import PageContent from '../../../components/PageContent/PageContent';
 import PageHeader from '../../../components/PageHeader/PageHeader';
 import TableFilter from '../../../components/Table/components/Filter';
 import Table from '../../../components/Table/Table';
 import { useInjectReducer } from '../../../hooks/useInjectReducer';
 import { useInjectSaga } from '../../../hooks/useInjectSaga';
+import { DATE_FORMAT } from '../../App/constants';
 import * as mapDispatchToProps from './actions';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectAll, makeSelectLoading, makeSelectQuery } from './selectors';
 
+const key = 'adminContactListPage';
+
 /* eslint-disable react/prefer-stateless-function */
-const ContentsListingPage = (props) => {
+const Contact = (props) => {
   const [state, setState] = useState({
     open: false,
     deleteId: '',
-    help: false,
   });
 
   const navigate = useNavigate();
 
-  useInjectReducer({ key: 'contentsListingPage', reducer });
-  useInjectSaga({ key: 'contentsListingPage', saga });
+  useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
 
   useEffect(() => {
     props.loadAllRequest(props.query);
-  }, [props.query.page, props.query.size]);
+  }, [props.query.size, props.query.page]);
 
   const handlePagination = (paging) => {
     props.setQueryValue({ key: 'page', value: paging.page });
     props.setQueryValue({ key: 'size', value: paging.size });
-  };
-
-  const handleAdd = () => {
-    props.clearOne();
-    navigate('/admin/section-content/add');
-  };
-
-  const handleEdit = (id) => {
-    navigate(`/admin/section-content/edit/${id}`);
-    props.clearOne();
   };
 
   const handleQueryChange = (e) => {
@@ -70,53 +68,48 @@ const ContentsListingPage = (props) => {
     }
   };
 
+  const handleView = (id) => {
+    navigate(`/admin/contact-manage/view/${id}`);
+  };
+
+  const handleAdd = () => {
+    props.clearOne();
+    navigate('/admin/contact-manage/add');
+  };
+
   const handleOpen = (id) => {
-    setState({ ...state, open: true, deleteId: id });
+    setState({ open: true, deleteId: id });
   };
 
   const handleClose = () => {
-    setState({ ...state, open: false });
+    setState({ open: false });
   };
 
   const handleDelete = (id) => {
     props.deleteOneRequest(id);
-    setState({ ...state, open: false });
-  };
-
-  const toggleHelp = () => {
-    setState({ ...state, help: !state.help });
+    setState({ open: false });
   };
 
   const {
-    all: { data, page, size, totalData },
+    all: { data, page, size, totaldata },
     query,
     loading,
-    showForm,
   } = props;
-
-  const tablePagination = { page, size, totaldata: totalData };
-  const tableData = data.map(
-    ({ name, key, is_active, publish_from, publish_to, _id }) => [
-      name,
-      key,
-      <>
-        {is_active ? (
-          <span className="label-active">active</span>
-        ) : (
-          <span className="label-inactive">inactive</span>
-        )}
-      </>,
-      <div className="flex gap-2">
-        <span className="icon-edit" onClick={() => handleEdit(_id)}>
-          <FaPen />
-        </span>
-        <span className="icon-trash" onClick={() => handleOpen(_id)}>
-          <FaTrash />
-        </span>
-      </div>,
-    ],
-  );
-
+  const tablePagination = { page, size, totaldata };
+  const tableData = data.map(({ name, email, subject, added_at, _id }) => [
+    name,
+    email,
+    subject,
+    moment(added_at).format(DATE_FORMAT),
+    <div className="flex gap-2">
+      <span className="icon-edit" onClick={() => handleView(_id)}>
+        <FaEye />
+      </span>
+      <span className="icon-trash" onClick={() => handleOpen(_id)}>
+        <FaTrash />
+      </span>
+    </div>,
+  ]);
   return (
     <>
       <DeleteDialog
@@ -125,46 +118,28 @@ const ContentsListingPage = (props) => {
         doDelete={() => handleDelete(state.deleteId)}
       />
       <Helmet>
-        <title>Routine</title>
+        <title>Contacts</title>
       </Helmet>
-      {loading && loading === true ? <Loading /> : <></>}
-      <PageHeader
-        title="Routine"
-        sdf
-        actions={
-          <Button onClick={handleAdd} variant="primary">
-            <FaPlus />
-            Add New
-          </Button>
-        }
-      ></PageHeader>
-
+      <PageHeader title="Contacts" />
       <PageContent loading={loading}>
-        <TableFilter col={3}>
+        <TableFilter col={2}>
           <TextField
             type="text"
+            id="find_name"
             name="find_name"
-            placeholder="Search by name"
+            handleChange={handleQueryChange}
+            handleKeyDown={handleKeyPress}
             value={query.find_name}
-            handleChange={handleQueryChange}
-            onKeyDown={handleKeyPress}
-          />
-          <TextField
-            type="text"
-            name="find_key"
-            placeholder="Search by key"
-            value={query.find_key}
-            handleChange={handleQueryChange}
-            onKeyDown={handleKeyPress}
+            placeholder="Search Contacts"
           />
           <div>
-            <Button onClick={handleSearch} variant="dark">
+            <Button variant={'dark'} onClick={handleSearch}>
               <FaSearch className="my-1" />
             </Button>
           </div>
         </TableFilter>
         <Table
-          tableHead={['Name', 'Key', 'Is Active', 'Action']}
+          tableHead={['Name', 'Email', 'Subject', 'Added at', 'Actions']}
           tableData={tableData}
           pagination={tablePagination}
           handlePagination={handlePagination}
@@ -180,7 +155,4 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ContentsListingPage);
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);

@@ -23,6 +23,7 @@ import {
   FaThLarge,
   FaUserShield,
   FaBell,
+  FaStickyNote,
 } from 'react-icons/fa';
 
 const menu = [
@@ -43,7 +44,12 @@ const menu = [
         icon: <FaAlignLeft />,
         link: '/admin/section-content',
       },
-
+      {
+        key: '2.2',
+        name: 'Assignment',
+        icon: <FaStickyNote />,
+        link: '/admin/assignments',
+      },
       {
         key: '2.3',
         name: 'Media',
@@ -70,6 +76,13 @@ const menu = [
         link: '/admin/notification-cat-manage',
       },
     ],
+  },
+
+  {
+    key: '5',
+    name: 'Contacts',
+    icon: <FaAddressCard />,
+    link: '/admin/contact-manage',
   },
 ];
 export default menu;

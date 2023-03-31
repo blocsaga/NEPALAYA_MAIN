@@ -1,4 +1,3 @@
-import ContactUsPage from '../containers/ContactUs/Loadable';
 import EditorFileSelectPage from '../containers/EditorFileSelect';
 import ForgotPasswordUserPage from '../containers/ForgotPasswordUserPage/Loadable';
 import HomePage from '../containers/HomePage';
@@ -52,12 +51,6 @@ const publicRoutes = [
     exact: true,
     path: '/reset-password/:email',
     element: <ResetPasswordPage />,
-  },
-
-  {
-    exact: true,
-    path: '/contact',
-    element: <ContactUsPage />,
   },
 ];
 

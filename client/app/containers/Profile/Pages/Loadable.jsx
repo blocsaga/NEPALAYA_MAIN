@@ -23,3 +23,6 @@ export const Notification = loadable(() => import('./Notification'), {
 export const Section = loadable(() => import('./Section'), {
   fallback: <Loading />,
 });
+export const Assignment = loadable(() => import('./Assignment'), {
+  fallback: <Loading />,
+});

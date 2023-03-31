@@ -9,6 +9,8 @@ router.get('/user/registration', authentication, authorization, adminDashboardCo
 router.get('/user/recent', authentication, authorization, adminDashboardController.getLatestFiveUsers);
 router.get('/user/roles', authentication, authorization, adminDashboardController.GetAllUserGroupBy);
 router.get('/user/sections', authentication, authorization, adminDashboardController.getSectionsByUser);
+router.get('/user/assignments', authentication, authorization, adminDashboardController.getAssignmentsByUser);
+
 router.get('/user/notifications', authentication, authorization, adminDashboardController.getNotifications);
 
 module.exports = router;

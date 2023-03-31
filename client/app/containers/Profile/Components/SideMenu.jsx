@@ -57,6 +57,12 @@ function App(props) {
               </NavLink>
               <NavLink
                 className="mb-2 bg-white rounded-lg py-3 px-4 block text-black"
+                to={'/user/profile/assignments'}
+              >
+                Class Assignment
+              </NavLink>
+              <NavLink
+                className="mb-2 bg-white rounded-lg py-3 px-4 block text-black"
                 to="/user/profile/change-password"
               >
                 Change Password

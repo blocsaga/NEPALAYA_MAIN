@@ -7,6 +7,7 @@ import {
   Information,
   VerifyEmail,
   Section,
+  Assignment,
   Notification,
 } from './Pages/Loadable';
 import reducer from './reducer';
@@ -27,6 +28,8 @@ const Profile = (props) => {
           <Route path={'information'} element={<Information />} />
           <Route path={'notification'} element={<Notification />} />
           <Route path={'routine'} element={<Section />} />
+          <Route path={'assignments'} element={<Assignment />} />
+
           <Route path={'*'} element={<Information />} />
         </Routes>
       </Layout>

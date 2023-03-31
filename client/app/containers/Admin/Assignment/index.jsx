@@ -20,7 +20,7 @@ import saga from './saga';
 import { makeSelectAll, makeSelectLoading, makeSelectQuery } from './selectors';
 
 /* eslint-disable react/prefer-stateless-function */
-const ContentsListingPage = (props) => {
+const AssignmentListingPage = (props) => {
   const [state, setState] = useState({
     open: false,
     deleteId: '',
@@ -29,8 +29,8 @@ const ContentsListingPage = (props) => {
 
   const navigate = useNavigate();
 
-  useInjectReducer({ key: 'contentsListingPage', reducer });
-  useInjectSaga({ key: 'contentsListingPage', saga });
+  useInjectReducer({ key: 'assignmentListingPage', reducer });
+  useInjectSaga({ key: 'assignmentListingPage', saga });
 
   useEffect(() => {
     props.loadAllRequest(props.query);
@@ -43,11 +43,11 @@ const ContentsListingPage = (props) => {
 
   const handleAdd = () => {
     props.clearOne();
-    navigate('/admin/section-content/add');
+    navigate('/admin/assignments/add');
   };
 
   const handleEdit = (id) => {
-    navigate(`/admin/section-content/edit/${id}`);
+    navigate(`/admin/assignments/edit/${id}`);
     props.clearOne();
   };
 
@@ -125,11 +125,11 @@ const ContentsListingPage = (props) => {
         doDelete={() => handleDelete(state.deleteId)}
       />
       <Helmet>
-        <title>Routine</title>
+        <title>Assignment</title>
       </Helmet>
       {loading && loading === true ? <Loading /> : <></>}
       <PageHeader
-        title="Routine"
+        title="Assignment"
         sdf
         actions={
           <Button onClick={handleAdd} variant="primary">
@@ -183,4 +183,4 @@ const mapStateToProps = createStructuredSelector({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ContentsListingPage);
+)(AssignmentListingPage);

@@ -23,6 +23,8 @@ const checkPathname = (pathname) => {
       return false;
     case '/signup':
       return false;
+    case '/contact':
+      return false;
     default:
       break;
   }
@@ -37,7 +39,6 @@ class Layout1 extends Component {
         { id: 1, idnm: 'home', navheading: 'Home' },
         { id: 2, idnm: 'courses', navheading: 'Courses' },
         { id: 3, idnm: 'team', navheading: 'Team' },
-        { id: 4, idnm: 'alumni', navheading: 'Alumni' },
         { id: 5, idnm: 'contact', navheading: 'Contact' },
       ],
       pos: document.documentElement.scrollTop,
