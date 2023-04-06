@@ -55,7 +55,7 @@ export const ResetPasswordPage = (props) => {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-16">
+    <div className="max-w-lg mx-5 p-16">
       <h1 className="text-2xl font-bold">Reset your password</h1>
       <input
         className="inputbox w-full"

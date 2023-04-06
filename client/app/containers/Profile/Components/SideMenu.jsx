@@ -1,22 +1,31 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FaCheck, FaEnvelopeOpenText, FaTimes } from 'react-icons/fa';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { useInjectReducer } from '../../../hooks/useInjectReducer';
 import { useInjectSaga } from '../../../hooks/useInjectSaga';
-import { makeSelectUser } from '../../App/selectors';
+import { makeSelectUser, makeSelectLocation } from '../../App/selectors';
 import '../profile.css';
 import reducer from '../reducer';
 import saga from '../saga';
 import { makeSelectToken } from '../selectors';
 
+import { Nav, NavItem, NavLink, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+
 function App(props) {
+  const {
+    location: { pathname },
+  } = props;
   useInjectReducer({
     key: 'userPersonalInformationPage',
     reducer,
   });
   useInjectSaga({ key: 'userPersonalInformationPage', saga });
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggle = () => setDropdownOpen(!dropdownOpen);
 
   const { user, token } = props;
   return (
@@ -24,7 +33,7 @@ function App(props) {
       <div>
         {token || user.email_verified ? (
           <>
-            <div className="text-center p-4 bg-white rounded-lg">
+            {/* <div className="text-center p-4 bg-white rounded-lg">
               <div className="relative inline-block">
                 <FaEnvelopeOpenText className="text-5xl text-gray-300" />
                 <div className="flex absolute -right-2 -bottom-2 h-6 w-6 rounded-full bg-success">
@@ -34,39 +43,57 @@ function App(props) {
               <div className=" mt-2 font-bold">
                 <p className="text-success">Your Email is Verified</p>
               </div>
-            </div>
-            <h2 className="text-2xl mb-2 font-bold mt-4">Profile</h2>
+            </div> */}
+            <Breadcrumb className="my-5">
+              <BreadcrumbItem active>Profile</BreadcrumbItem>
+              <BreadcrumbItem>
+                <a href="/">Home</a>
+              </BreadcrumbItem>
+            </Breadcrumb>
+
             <div className="ProfileNav">
-              <NavLink
-                className="mb-2 bg-white rounded-lg py-3 px-4 block text-black"
-                to="/user/profile/information"
-              >
-                Information
-              </NavLink>
-              <NavLink
-                className="mb-2 bg-white rounded-lg py-3 px-4 block text-black"
-                to="/user/profile/notification"
-              >
-                Notification
-              </NavLink>
-              <NavLink
-                className="mb-2 bg-white rounded-lg py-3 px-4 block text-black"
-                to={'/user/profile/routine'}
-              >
-                Class Routine
-              </NavLink>
-              <NavLink
-                className="mb-2 bg-white rounded-lg py-3 px-4 block text-black"
-                to={'/user/profile/assignments'}
-              >
-                Class Assignment
-              </NavLink>
-              <NavLink
-                className="mb-2 bg-white rounded-lg py-3 px-4 block text-black"
-                to="/user/profile/change-password"
-              >
-                Change Password
-              </NavLink>
+              <Nav tabs>
+                <NavItem>
+                  <NavLink
+                    href="/user/profile/information"
+                    active={pathname === '/user/profile/information'}
+                  >
+                    Information
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    href="/user/profile/notification"
+                    active={pathname === '/user/profile/notification'}
+                  >
+                    Notification
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    href="/user/profile/routine"
+                    active={pathname === '/user/profile/routine'}
+                  >
+                    Class Routine
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    href="/user/profile/assignments"
+                    active={pathname === '/user/profile/assignments'}
+                  >
+                    Class Assignment
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink
+                    href="/user/profile/change-password"
+                    active={pathname === '/user/profile/change-password'}
+                  >
+                    Change Password
+                  </NavLink>
+                </NavItem>
+              </Nav>
             </div>
           </>
         ) : (
@@ -96,11 +123,13 @@ function App(props) {
 App.propTypes = {
   user: PropTypes.object.isRequired,
   token: PropTypes.bool.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   user: makeSelectUser(),
   token: makeSelectToken(),
+  location: makeSelectLocation(),
 });
 
 export default connect(mapStateToProps)(App);

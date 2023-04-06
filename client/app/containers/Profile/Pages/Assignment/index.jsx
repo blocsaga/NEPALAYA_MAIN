@@ -10,6 +10,7 @@ import saga from './saga';
 import { makeSelectAssignment, makeSelectLoading } from './selectors';
 import { makeSelectUser } from '../../../App/selectors';
 import { FaInfoCircle, FaBookOpen } from 'react-icons/fa';
+import { Alert } from 'reactstrap';
 
 const key = 'userAssignmentPage';
 const AssignmentPage = (props) => {
@@ -26,24 +27,20 @@ const AssignmentPage = (props) => {
   ) : (
     <div>
       <div className="my-10 container mx-auto">
-        <div className="section-title">
+        <div className="section-title my-4">
           <h2 className="text-2xl font-bold tracking-tight text-gray-800 sm:text-2xl">
             Get to know which in which assignment you are assigned into.
           </h2>
         </div>
         {assignment && assignment.data && assignment.data.length > 0 ? (
           assignment.data.map((dat) => (
-            <div
-              key={dat.key}
-              className="bg-blue-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md"
-              role="alert"
-            >
-              <div className="flex">
-                <div className="py-1">
-                  <FaBookOpen className="fill-current h-6 w-6 text-teal-500 mr-4" />
+            <Alert key={dat.key}>
+              <div className="row">
+                <div className="p-2 my-auto">
+                  <FaBookOpen className="fill-current h-5 w-6 text-teal-500 mr-4" />
                 </div>
                 <div>
-                  <p className="font-bold">{dat.name}</p>
+                  <p className="h4 mb-0">{dat.name}</p>
 
                   <div
                     className="ckEditor"
@@ -53,7 +50,7 @@ const AssignmentPage = (props) => {
                   />
                 </div>
               </div>
-            </div>
+            </Alert>
           ))
         ) : (
           <div

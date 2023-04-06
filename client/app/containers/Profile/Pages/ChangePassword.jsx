@@ -58,7 +58,7 @@ export const ChangePassword = (props) => {
 
   return (
     <>
-      <div className="md:w-1/2 pb-4">
+      <div className="my-4">
         <label className="label" htmlFor="oldPassword">
           Old Password
         </label>
@@ -109,7 +109,12 @@ export const ChangePassword = (props) => {
         )}
       </div>
 
-      <Button onClick={handleSave}>Change Password</Button>
+      <Button
+        className="submitBnt btn btn-primary btn-round"
+        onClick={handleSave}
+      >
+        Change Password
+      </Button>
     </>
   );
 };

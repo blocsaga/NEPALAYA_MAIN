@@ -23,6 +23,8 @@ const checkPathname = (pathname) => {
       return false;
     case '/signup':
       return false;
+    case '/forgot-password-user':
+      return false;
     case '/contact':
       return false;
     default:
@@ -31,59 +33,51 @@ const checkPathname = (pathname) => {
   return true;
 };
 
-class Layout1 extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      navItems: [
-        { id: 1, idnm: 'home', navheading: 'Home' },
-        { id: 2, idnm: 'courses', navheading: 'Courses' },
-        { id: 3, idnm: 'team', navheading: 'Team' },
-        { id: 5, idnm: 'contact', navheading: 'Contact' },
-      ],
-      pos: document.documentElement.scrollTop,
-      imglight: false,
-      navClass: '',
-      fixTop: true,
-    };
-  }
-  pathname = this.props.location.pathname;
-  showHeaderAndFooter = checkPathname(this.pathname);
+function Layout1(props) {
+  const [state, setState] = useState({
+    navItems: [
+      { id: 1, idnm: 'home', navheading: 'Home' },
+      { id: 2, idnm: 'courses', navheading: 'Courses' },
+      { id: 3, idnm: 'team', navheading: 'Team' },
+      { id: 5, idnm: 'contact', navheading: 'Contact' },
+    ],
+    pos: document.documentElement.scrollTop,
+    imglight: false,
+    navClass: '',
+    fixTop: true,
+  });
 
-  componentDidMount() {
-    window.addEventListener('scroll', this.scrollNavigation, true);
-  }
+  let pathname = props.location.pathname;
+  let showHeaderAndFooter = checkPathname(pathname);
 
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.scrollNavigation, true);
-  }
-
-  scrollNavigation = () => {
+  const scrollNavigation = () => {
     var scrollup = document.documentElement.scrollTop;
-    if (scrollup > this.state.pos) {
-      this.setState({ navClass: 'nav-sticky', imglight: false });
+    if (scrollup > state.pos) {
+      setState({ navClass: 'nav-sticky', imglight: false });
     } else {
-      this.setState({ navClass: '', imglight: false });
+      setState({ navClass: '', imglight: false });
     }
   };
+  useEffect(() => {
+    window.addEventListener('scroll', scrollNavigation, true);
+    return window.removeEventListener('scroll', scrollNavigation, true);
+  }, []);
 
-  render() {
-    return (
-      <>
-        {this.showHeaderAndFooter && (
-          <Header
-            navItems={this.state.navItems}
-            navClass={this.state.navClass}
-            imglight={this.state.imglight}
-            top={this.state.fixTop}
-          />
-        )}
+  return (
+    <>
+      {showHeaderAndFooter && (
+        <Header
+          navItems={state.navItems}
+          navClass={state.navClass}
+          imglight={state.imglight}
+          top={state.fixTop}
+        />
+      )}
 
-        <div className="flex-1">{switchRoutes}</div>
-        {this.showHeaderAndFooter && <Footer />}
-      </>
-    );
-  }
+      <div className="flex-1">{switchRoutes}</div>
+      {showHeaderAndFooter && <Footer />}
+    </>
+  );
 }
 
 const mapStateToProps = createStructuredSelector({

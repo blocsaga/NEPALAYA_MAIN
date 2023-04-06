@@ -92,7 +92,7 @@ export default class DateInput extends React.PureComponent {
             <option value="12">December</option>
           </select>
           <select
-            className="inputbox mr-2 w-24"
+            className="inputbox mr-2 my-2 w-24"
             value={day}
             onChange={this.handleChange('day')}
             onBlur={this.handleChange('day')}

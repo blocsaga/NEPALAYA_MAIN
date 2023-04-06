@@ -10,6 +10,7 @@ import saga from './saga';
 import { makeSelectSection, makeSelectLoading } from './selectors';
 import { makeSelectUser } from '../../../App/selectors';
 import { FaClock, FaInfoCircle } from 'react-icons/fa';
+import { Alert } from 'reactstrap';
 
 const key = 'userSectionPage';
 const SectionPage = (props) => {
@@ -26,7 +27,7 @@ const SectionPage = (props) => {
     <div className="circular_loader waftloader"></div>
   ) : (
     <div>
-      <div className="my-10 container mx-auto">
+      <div className="my-4 container mx-auto">
         <div className="section-title">
           <h2 className="text-2xl font-bold tracking-tight text-gray-800 sm:text-2xl">
             Get to know which section you are in.
@@ -34,17 +35,17 @@ const SectionPage = (props) => {
         </div>
         {section && section.data && section.data.length > 0 ? (
           section.data.map((dat) => (
-            <div
+            <Alert
               key={dat.key}
               className="bg-blue-100 border-t-4 border-teal-500 rounded-b text-teal-900 px-4 py-3 shadow-md"
               role="alert"
             >
-              <div className="flex">
-                <div className="py-1">
-                  <FaClock className="fill-current h-6 w-6 text-teal-500 mr-4" />
+              <div className="row">
+                <div className="p-2 my-auto">
+                  <FaClock className="fill-current h6 w-6 text-teal-500 mr-4" />
                 </div>
                 <div>
-                  <p className="font-bold">{dat.name}</p>
+                  <p className="h4 mb-0">{dat.name}</p>
 
                   <div
                     className="ckEditor"
@@ -54,7 +55,7 @@ const SectionPage = (props) => {
                   />
                 </div>
               </div>
-            </div>
+            </Alert>
           ))
         ) : (
           <div

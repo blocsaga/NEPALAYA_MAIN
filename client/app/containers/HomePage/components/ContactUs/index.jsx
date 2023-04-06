@@ -19,7 +19,6 @@ import {
 import {
   Col,
   Container,
-  Form,
   FormGroup,
   Input,
   Label,
@@ -103,7 +102,7 @@ const ContactUs = (props) => {
             <Col lg={6}>
               <div className="custom-form mt-4">
                 <div id="message"></div>
-                <Form method="post" name="contact-form" id="contact-form">
+                <div name="contact-form" id="contact-form">
                   <Row>
                     <Col lg={6}>
                       <FormGroup className="mt-3">
@@ -219,7 +218,7 @@ const ContactUs = (props) => {
                       <div id="simple-msg"></div>
                     </Col>
                   </Row>
-                </Form>
+                </div>
               </div>
             </Col>
           </Row>

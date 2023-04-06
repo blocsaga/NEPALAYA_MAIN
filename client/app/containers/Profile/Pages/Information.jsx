@@ -108,7 +108,7 @@ const UserPersonalInformationPage = (props) => {
             <div className="error">{errors.email}</div>
           </div>
 
-          <div className="md:w-1/2 pb-4">
+          <div className="md:w-1/2 mb-8">
             <label className="text-sm">Date Of Birth</label>
             <DateInput
               onDateChange={(date) => {
@@ -121,7 +121,7 @@ const UserPersonalInformationPage = (props) => {
             />
           </div>
 
-          <div className="w-full pb-4">
+          <div className="w-full my-4">
             <div>
               <label className="text-sm">Role :</label>{' '}
               {one.roles.map((each) => (
@@ -139,7 +139,7 @@ const UserPersonalInformationPage = (props) => {
           Your account created at {moment(one.added_at).format(DATE_FORMAT)}
         </div> */}
         </div>
-        <div
+        {/* <div
           style={{
             display: 'flex',
           }}
@@ -163,7 +163,7 @@ const UserPersonalInformationPage = (props) => {
               </section>
             )}
           </Dropzone>
-        </div>
+        </div> */}
       </div>
 
       <Button className="" onClick={handleSave}>
